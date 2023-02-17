@@ -1,10 +1,12 @@
 import Car from './car.png';
-import { Container, Image, Slider } from './styles';
+import { Container, Image } from './styles';
+import Slider, { Settings } from 'react-slick';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useEffect, useRef, useState } from 'react';
 
-const horizontalSettings = {
+const horizontalSettings: Settings = {
   dots: false,
   arrows: false,
   infinite: true,
@@ -14,7 +16,7 @@ const horizontalSettings = {
   autoplay: false,
 };
 
-const verticalSettings = {
+const verticalSettings: Settings = {
   ...horizontalSettings,
   vertical: true,
   verticalSwiping: true,
@@ -22,16 +24,66 @@ const verticalSettings = {
 
 const images = [
   <Image key="1" alt="1" src={Car} />,
-  <Image key="1" alt="1" src={Car} />,
-  <Image key="1" alt="1" src={Car} />,
+  <Image key="2" alt="1" src={Car} />,
+  <Image key="3" alt="1" src={Car} />,
 ];
 
 const App = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const verticalSlider = useRef<Slider>(null);
+  const firstHorizontalSlider = useRef<Slider>(null);
+  const secondHorizontalSlider = useRef<Slider>(null);
+  const thirdHorizontalSlider = useRef<Slider>(null);
+  const refs = [
+    firstHorizontalSlider,
+    secondHorizontalSlider,
+    thirdHorizontalSlider,
+  ];
+
+  const onKeyDown = async (event: KeyboardEvent) => {
+    if (event.key === 'ArrowUp') {
+      verticalSlider.current?.slickPrev();
+    }
+    if (event.key === 'ArrowDown') {
+      verticalSlider.current?.slickNext();
+    }
+    if (event.key === 'ArrowLeft') {
+      const horizontalSlider = refs[currentSlide];
+      horizontalSlider.current?.slickPrev();
+    }
+    if (event.key === 'ArrowRight') {
+      const horizontalSlider = refs[currentSlide];
+      horizontalSlider.current?.slickNext();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [onKeyDown]);
+
+  const handleSlideChange = (slideIndex: number) => {
+    setCurrentSlide(slideIndex);
+  };
+
   return (
     <Container>
-      <Slider {...verticalSettings}>
-        <Slider {...horizontalSettings}>{images.map((image) => image)}</Slider>
-        <Slider {...horizontalSettings}>{images.map((image) => image)}</Slider>
+      <Slider
+        {...verticalSettings}
+        ref={verticalSlider}
+        afterChange={handleSlideChange}
+      >
+        <Slider {...horizontalSettings} ref={firstHorizontalSlider}>
+          {images.map((image) => image)}
+        </Slider>
+        <Slider {...horizontalSettings} ref={secondHorizontalSlider}>
+          {images.map((image) => image)}
+        </Slider>
+        <Slider {...horizontalSettings} ref={thirdHorizontalSlider}>
+          {images.map((image) => image)}
+        </Slider>
       </Slider>
     </Container>
   );

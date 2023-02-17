@@ -19,13 +19,3 @@ export const Image = styled.img`
   width: 100%;
   height: 100%;
 `;
-
-export const Slider = styled(SlickSlider)`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  & * {
-    width: 100%;
-    height: 100%;
-  }
-`;
