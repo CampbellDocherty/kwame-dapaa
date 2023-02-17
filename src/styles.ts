@@ -1,3 +1,4 @@
+import SlickSlider from 'react-slick';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -8,6 +9,7 @@ export const Container = styled.div`
   & * {
     width: 100%;
     height: 100%;
+    margin: 0;
   }
 `;
 
@@ -16,4 +18,14 @@ export const Image = styled.img`
   object-position: center;
   width: 100%;
   height: 100%;
+`;
+
+export const Slider = styled(SlickSlider)`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  & * {
+    width: 100%;
+    height: 100%;
+  }
 `;
