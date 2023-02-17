@@ -74,27 +74,14 @@ const App = () => {
         {...verticalSettings}
         ref={verticalSlider}
         afterChange={handleSlideChange}
-        onSwipe={(event) => console.log(event)}
       >
-        <Slider
-          {...horizontalSettings}
-          ref={firstHorizontalSlider}
-          onSwipe={(event) => console.log(event)}
-        >
+        <Slider {...horizontalSettings} ref={firstHorizontalSlider}>
           {images.map((image) => image)}
         </Slider>
-        <Slider
-          {...horizontalSettings}
-          ref={secondHorizontalSlider}
-          onSwipe={(event) => console.log(event)}
-        >
+        <Slider {...horizontalSettings} ref={secondHorizontalSlider}>
           {images.map((image) => image)}
         </Slider>
-        <Slider
-          {...horizontalSettings}
-          ref={thirdHorizontalSlider}
-          onSwipe={(event) => console.log(event)}
-        >
+        <Slider {...horizontalSettings} ref={thirdHorizontalSlider}>
           {images.map((image) => image)}
         </Slider>
       </Slider>
