@@ -23,9 +23,9 @@ const verticalSettings: Settings = {
 };
 
 const images = [
-  <Image key="1" alt="1" src={Car} />,
-  <Image key="2" alt="1" src={Car} />,
-  <Image key="3" alt="1" src={Car} />,
+  <Image key="1" alt="Car" src={Car} />,
+  <Image key="2" alt="Car" src={Car} />,
+  <Image key="3" alt="Car" src={Car} />,
 ];
 
 const App = () => {
@@ -74,14 +74,27 @@ const App = () => {
         {...verticalSettings}
         ref={verticalSlider}
         afterChange={handleSlideChange}
+        onSwipe={(event) => console.log(event)}
       >
-        <Slider {...horizontalSettings} ref={firstHorizontalSlider}>
+        <Slider
+          {...horizontalSettings}
+          ref={firstHorizontalSlider}
+          onSwipe={(event) => console.log(event)}
+        >
           {images.map((image) => image)}
         </Slider>
-        <Slider {...horizontalSettings} ref={secondHorizontalSlider}>
+        <Slider
+          {...horizontalSettings}
+          ref={secondHorizontalSlider}
+          onSwipe={(event) => console.log(event)}
+        >
           {images.map((image) => image)}
         </Slider>
-        <Slider {...horizontalSettings} ref={thirdHorizontalSlider}>
+        <Slider
+          {...horizontalSettings}
+          ref={thirdHorizontalSlider}
+          onSwipe={(event) => console.log(event)}
+        >
           {images.map((image) => image)}
         </Slider>
       </Slider>
