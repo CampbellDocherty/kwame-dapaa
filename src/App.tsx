@@ -14,6 +14,7 @@ const horizontalSettings: Settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: false,
+  lazyLoad: 'progressive',
 };
 
 const verticalSettings: Settings = {

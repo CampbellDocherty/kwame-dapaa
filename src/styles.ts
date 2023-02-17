@@ -6,15 +6,14 @@ export const Container = styled.div`
   overflow: hidden;
 
   & * {
-    width: 100%;
-    height: 100%;
-    margin: 0;
+    width: 100vw;
+    height: 100vh;
   }
 `;
 
 export const Image = styled.img`
   object-fit: cover;
   object-position: center;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 `;
