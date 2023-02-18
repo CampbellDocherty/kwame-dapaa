@@ -1,25 +1,11 @@
 import { Container, Image } from './styles';
 import Slider from 'react-slick';
-import * as storage from 'firebase/storage';
-import { storageRef } from './firebase';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useEffect, useRef, useState } from 'react';
 import { verticalSettings, horizontalSettings } from './sliderSettings';
-
-const fetchImages = async () => {
-  const urls = await storage
-    .listAll(storageRef)
-    .then((result: storage.ListResult) => {
-      const urls = result.items.map((item) => storage.getDownloadURL(item));
-      return Promise.all(urls);
-    })
-    .catch((error: Error) => {
-      console.error(error);
-    });
-  return urls;
-};
+import { fetchImages } from './fetchImages';
 
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
