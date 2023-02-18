@@ -1,35 +1,16 @@
-import Car from './car.png';
 import { Container, Image } from './styles';
-import Slider, { Settings } from 'react-slick';
+import Slider from 'react-slick';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useEffect, useRef, useState } from 'react';
-
-const horizontalSettings: Settings = {
-  dots: false,
-  arrows: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: false,
-};
-
-const verticalSettings: Settings = {
-  ...horizontalSettings,
-  vertical: true,
-  verticalSwiping: true,
-};
-
-const images = [
-  <Image key="1" alt="Car" src={Car} />,
-  <Image key="2" alt="Car" src={Car} />,
-  <Image key="3" alt="Car" src={Car} />,
-];
+import { verticalSettings, horizontalSettings } from './sliderSettings';
+import { fetchImages } from './fetchImages';
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [images, setImages] = useState<string[]>([]);
   const verticalSlider = useRef<Slider>(null);
   const firstHorizontalSlider = useRef<Slider>(null);
   const secondHorizontalSlider = useRef<Slider>(null);
@@ -39,6 +20,18 @@ const App = () => {
     secondHorizontalSlider,
     thirdHorizontalSlider,
   ];
+
+  useEffect(() => {
+    const getImageUrls = async () => {
+      return fetchImages();
+    };
+    getImageUrls().then((urls) => {
+      if (urls) {
+        setImages([...urls, ...urls, ...urls]);
+        setIsLoading(false);
+      }
+    });
+  }, []);
 
   const onKeyDown = async (event: KeyboardEvent) => {
     if (event.key === 'ArrowUp') {
@@ -68,6 +61,14 @@ const App = () => {
     setCurrentSlide(slideIndex);
   };
 
+  if (isLoading) {
+    return (
+      <Container>
+        <p>Loading...</p>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <Slider
@@ -76,13 +77,19 @@ const App = () => {
         afterChange={handleSlideChange}
       >
         <Slider {...horizontalSettings} ref={firstHorizontalSlider}>
-          {images.map((image) => image)}
+          {images.map((src, index) => (
+            <Image key={index} alt="Car" src={src} />
+          ))}
         </Slider>
         <Slider {...horizontalSettings} ref={secondHorizontalSlider}>
-          {images.map((image) => image)}
+          {images.map((src, index) => (
+            <Image key={index} alt="Car" src={src} />
+          ))}
         </Slider>
         <Slider {...horizontalSettings} ref={thirdHorizontalSlider}>
-          {images.map((image) => image)}
+          {images.map((src, index) => (
+            <Image key={index} alt="Car" src={src} />
+          ))}
         </Slider>
       </Slider>
     </Container>
