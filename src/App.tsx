@@ -1,27 +1,12 @@
 import { Container, Image } from './styles';
-import Slider, { Settings } from 'react-slick';
+import Slider from 'react-slick';
 import * as storage from 'firebase/storage';
 import { storageRef } from './firebase';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useEffect, useRef, useState } from 'react';
-
-const horizontalSettings: Settings = {
-  dots: false,
-  arrows: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: false,
-};
-
-const verticalSettings: Settings = {
-  ...horizontalSettings,
-  vertical: true,
-  verticalSwiping: true,
-};
+import { verticalSettings, horizontalSettings } from './sliderSettings';
 
 const fetchImages = async () => {
   const urls = await storage
