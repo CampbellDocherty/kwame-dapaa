@@ -8,6 +8,7 @@ import { verticalSettings, horizontalSettings } from './sliderSettings';
 import { fetchImages } from './fetchImages';
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [images, setImages] = useState<string[]>([]);
   const verticalSlider = useRef<Slider>(null);
@@ -25,7 +26,10 @@ const App = () => {
       return fetchImages();
     };
     getImageUrls().then((urls) => {
-      if (urls) setImages([...urls, ...urls, ...urls]);
+      if (urls) {
+        setImages([...urls, ...urls, ...urls]);
+        setIsLoading(false);
+      }
     });
   }, []);
 
@@ -56,6 +60,14 @@ const App = () => {
   const handleSlideChange = (slideIndex: number) => {
     setCurrentSlide(slideIndex);
   };
+
+  if (isLoading) {
+    return (
+      <Container>
+        <p>Loading...</p>
+      </Container>
+    );
+  }
 
   return (
     <Container>
